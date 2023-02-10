@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public interface IPlayerMovement : IMovementHandler
+public interface IPlayerMovementHandler : IMovementHandler
 {
     public float WalkSpeed { get; }
     public float SprintSpeed { get; }

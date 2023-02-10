@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerMovementHandler_Rigidbody : MonoBehaviour, IPlayerMovement
+public class PlayerMovementHandler_Rigidbody : MonoBehaviour, IPlayerMovementHandler
 {
     private const ForceMode JUMP_FORCEMODE = ForceMode.Impulse;
 
@@ -25,29 +25,27 @@ public class PlayerMovementHandler_Rigidbody : MonoBehaviour, IPlayerMovement
     }
     [SerializeField] private float _jumpForce;
 
-    public float Mass
-    {
-        get => _rb.mass;
-    }
-
     private bool _isGrounded;
     public bool IsGrounded
     {
         get => _isGrounded;
     }
 
+    public float Mass
+    {
+        get => _rb.mass;
+    }
     public Vector3 Velocity
     {
-        get => _velocity;
+        get => new Vector3(_moveInput.x, _rb.velocity.y, _moveInput.z);
     }
-    private Vector3 _velocity;
 
 
     private float _targetSpeed;
     private Vector3 _moveInput;
 
-
     private Rigidbody _rb;
+
 
     private void Awake()
     {
@@ -56,7 +54,6 @@ public class PlayerMovementHandler_Rigidbody : MonoBehaviour, IPlayerMovement
 
     private void Start()
     {
-        _velocity = Vector3.zero;
         _targetSpeed = WalkSpeed;
     }
 
@@ -64,10 +61,6 @@ public class PlayerMovementHandler_Rigidbody : MonoBehaviour, IPlayerMovement
     {
         UpdateMovement();
         HandleFreeFallVelocity();
-
-        _velocity.Scale(new Vector3(1,0,1));
-        _rb.MovePosition(transform.position + _velocity);
-        _velocity.y = IsGrounded ? 0 : _rb.velocity.y;
     }
 
     public void MoveTowards(Vector3 dir)
@@ -108,9 +101,7 @@ public class PlayerMovementHandler_Rigidbody : MonoBehaviour, IPlayerMovement
 
     private void UpdateMovement()
     {
-        var velocity = _moveInput * _targetSpeed * Time.deltaTime;
-        _velocity.x = velocity.x;
-        _velocity.z = velocity.z;
+        _rb.MovePosition(transform.position + (_moveInput * _targetSpeed * Time.deltaTime) );
     }
 
     private void HandleFreeFallVelocity()

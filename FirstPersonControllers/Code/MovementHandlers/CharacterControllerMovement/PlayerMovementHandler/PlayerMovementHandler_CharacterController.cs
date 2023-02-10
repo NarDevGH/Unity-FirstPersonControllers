@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMovementHandler_CharacterController : MonoBehaviour,IPlayerMovement
+public class PlayerMovementHandler_CharacterController : MonoBehaviour,IPlayerMovementHandler
 {
     public float WalkSpeed
     {

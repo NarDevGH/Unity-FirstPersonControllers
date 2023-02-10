@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class PlayerMovementInput : MonoBehaviour
 {
-    private IPlayerMovement _playerMovement;
+    private IPlayerMovementHandler _playerMovement;
 
     private void Awake()
     {
-        _playerMovement = GetComponent<IPlayerMovement>();
+        _playerMovement = GetComponent<IPlayerMovementHandler>();
     }
 
     private void Update()
