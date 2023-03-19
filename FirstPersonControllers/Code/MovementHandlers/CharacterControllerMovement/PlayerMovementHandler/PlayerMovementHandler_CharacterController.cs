@@ -71,7 +71,7 @@ public class PlayerMovementHandler_CharacterController : MonoBehaviour,IPlayerMo
     {
         if(dir.magnitude > 0) 
         {
-            _moveInput += transform.right * dir.x;
+            _moveInput = transform.right * dir.x;
             _moveInput += transform.forward * dir.z;
 
             //Clamp to avoid faster diagonal movement.
